@@ -735,10 +735,10 @@
         nvnda<span class="header__logo-dot">.</span>dev<span class="header__cursor"></span>
       </a>
       <nav class="header__nav">
-        <a href="#" class="active">Blog</a>
-        <a href="#">Notes</a>
-        <a href="#">Research</a>
-        <a href="#">About</a>
+        <a href="#featured" class="active">Featured</a>
+        <a href="#recent">Recent</a>
+        <a href="#notes">Notes</a>
+        <a href="#about">About</a>
       </nav>
     </div>
   </header>
@@ -760,21 +760,21 @@
     <span class="proof__sep">·</span>
     <span class="proof__item">Published in Block Magnates</span>
     <span class="proof__sep">·</span>
-    <span class="proof__item">Guest on Natalie Feng Lin</span>
+    <span class="proof__item">Guest on 她Ta Zhi Dao</span>
     <span class="proof__sep">·</span>
     <span class="proof__item">Public notes on HackMD</span>
   </div>
 
   <!-- FEATURED -->
-  <section class="featured reveal">
-    <div class="featured__card">
+  <section class="featured reveal" id="featured">
+    <a href="https://medium.com/block-magnates/breaking-into-web3-hacking-on-chain-smart-contracts-5c0a09820123" target="_blank" rel="noopener noreferrer" class="featured__card" style="text-decoration:none;color:inherit;">
       <div class="featured__top">
-        <div class="featured__label">Featured</div>
+        <div class="featured__label">Featured · Block Magnates</div>
         <h2 class="featured__title">Breaking into Web3:<br>Hacking On-Chain Smart Contracts</h2>
-        <div class="featured__meta">March 2026 · Block Magnates · 8 min read</div>
+        <div class="featured__meta">2025 · Block Magnates · 8 min read</div>
         <blockquote class="featured__quote">A single missed check can drain millions.</blockquote>
         <p class="featured__body">
-          Smart contract auditing requires understanding both the EVM execution model and common vulnerability patterns. Here's a classic reentrancy vulnerability, dissected step by step.
+          An introduction to smart contract security — how the EVM works, where vulnerabilities hide, and a step-by-step breakdown of a classic reentrancy exploit.
         </p>
       </div>
       <div class="featured__code-wrap">
@@ -801,34 +801,33 @@
         <span class="tag">reentrancy</span>
         <span class="tag tag--slate">solidity</span>
       </div>
-    </div>
+    </a>
   </section>
 
   <!-- RECENT -->
-  <section class="section reveal">
+  <section class="section reveal" id="recent">
     <div class="section__header">
       <span class="section__title">Recent</span>
-      <a href="#" class="section__more">View all →</a>
     </div>
     <div class="posts">
-      <a href="#" class="post">
-        <span class="post__date">Mar 26</span>
+      <a href="https://medium.com/block-magnates/my-first-on-chain-hacking-fallback-1097fd08af28" target="_blank" rel="noopener noreferrer" class="post">
+        <span class="post__date">2025</span>
         <div>
-          <div class="post__title">CRTP Exam: What I Learned Attacking Active Directory</div>
-          <div class="post__excerpt">An honest walkthrough of the Certified Red Team Professional exam — what worked, what didn't, and the methodology that got me through.</div>
+          <div class="post__title">My First On-Chain Hacking: Fallback</div>
+          <div class="post__excerpt">Solving Ethernaut's Fallback challenge — claiming contract ownership and draining funds by exploiting how Solidity handles fallback functions.</div>
           <div class="post__tags">
-            <span class="tag">active directory</span>
-            <span class="tag">CRTP</span>
-            <span class="tag tag--slate">cert</span>
+            <span class="tag">ethernaut</span>
+            <span class="tag">web3</span>
+            <span class="tag tag--slate">solidity</span>
           </div>
         </div>
         <span class="post__type">Article</span>
       </a>
-      <a href="#" class="post">
-        <span class="post__date">Feb 26</span>
+      <a href="https://nataliefenglin.substack.com/cp/188470043" target="_blank" rel="noopener noreferrer" class="post">
+        <span class="post__date">2025</span>
         <div>
           <div class="post__title">Cybersecurity, Scammers, and Confidence</div>
-          <div class="post__excerpt">Guest on Natalie Feng Lin's podcast — how scammers collect your data, social engineering in Asia, and building confidence as a woman in security.</div>
+          <div class="post__excerpt">Guest on 她Ta Zhi Dao — how scammers collect your data, social engineering in Asia, and building confidence as a woman in security.</div>
           <div class="post__tags">
             <span class="tag">social engineering</span>
             <span class="tag tag--slate">podcast</span>
@@ -836,48 +835,35 @@
         </div>
         <span class="post__type">Podcast</span>
       </a>
-      <a href="#" class="post">
-        <span class="post__date">Jan 26</span>
-        <div>
-          <div class="post__title">SSRF: When Your Server Makes Requests for the Attacker</div>
-          <div class="post__excerpt">Server-Side Request Forgery from first principles. What it is, why it matters, and how to test for it during a pentest.</div>
-          <div class="post__tags">
-            <span class="tag">SSRF</span>
-            <span class="tag">web security</span>
-          </div>
-        </div>
-        <span class="post__type">Article</span>
-      </a>
     </div>
   </section>
 
   <!-- STUDY NOTES -->
-  <section class="section reveal">
+  <section class="section reveal" id="notes">
     <div class="section__header">
-      <span class="section__title">Study Notes & References</span>
-      <a href="#" class="section__more">View all →</a>
+      <span class="section__title">Study Notes</span>
     </div>
     <div class="notes-grid">
-      <a href="#" class="note-card">
+      <a href="https://hackmd.io/9neNfXRCSxy9pRvVj8-4FA" target="_blank" rel="noopener noreferrer" class="note-card">
         <div class="note-card__icon">Reference</div>
         <div class="note-card__title">CRTP Study Notes</div>
-        <div class="note-card__desc">Active Directory pentesting methodology, tools, and attack paths.</div>
+        <div class="note-card__desc">Full AD red team kill chain — from AMSI bypass and domain enumeration to Kerberos attacks, persistence, and cross-forest trust abuse.</div>
       </a>
-      <a href="#" class="note-card">
+      <a href="https://hackmd.io/dmBM7NTXRbi_dlWvVJTEuw" target="_blank" rel="noopener noreferrer" class="note-card">
         <div class="note-card__icon">Cheatsheet</div>
-        <div class="note-card__title">Web App Pentest Checklist</div>
-        <div class="note-card__desc">OWASP-based checklist for web application security assessments.</div>
+        <div class="note-card__title">Exploiting Databases</div>
+        <div class="note-card__desc">SQL injection and exploitation reference for Oracle, MySQL, and PostgreSQL — from union-based extraction to RCE and WAF bypass.</div>
       </a>
-      <a href="#" class="note-card">
+      <a href="https://hackmd.io/TWVKRtuaQdKVvH6jkYGuTw" target="_blank" rel="noopener noreferrer" class="note-card">
         <div class="note-card__icon">Notes</div>
-        <div class="note-card__title">CEH Exam Prep</div>
-        <div class="note-card__desc">Key concepts and practice notes from the Certified Ethical Hacker journey.</div>
+        <div class="note-card__title">Exploiting ViewState</div>
+        <div class="note-card__desc">ASP.NET deserialization to RCE via ysoserial.net — TypeConfuseDelegate and ActivitySurrogateSelector gadget chains explained.</div>
       </a>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section class="about reveal">
+  <section class="about reveal" id="about">
     <div>
       <div class="about__label">About</div>
       <p class="about__text">
@@ -888,23 +874,15 @@
       </p>
       <p class="about__text" style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); line-height: 1.9;">
         Currently: researching, breaking, documenting.<br>
-        Drawing diagrams nobody asked for.<br>
-        Building something with thread and patience.
+        Drawing diagrams nobody asked for.
       </p>
-      <div class="about__connect">
-        <a href="#" class="about__link">→ LinkedIn</a>
-        <a href="#" class="about__link">→ Medium</a>
-        <a href="#" class="about__link">→ Email</a>
-      </div>
     </div>
     <div>
-      <div class="about__other-label">Also me, elsewhere</div>
-      <div class="about__stitch-card">
-        <div class="about__stitch-title">needle & strings</div>
-        <div class="about__stitch-desc">
-          I also make cross-stitch art. Travel photos turned into patterns, paired with poems. A different kind of patience, a different kind of precision.
-        </div>
-        <a href="https://needleandstrings.com" class="about__stitch-link">→ needleandstrings.com</a>
+      <div class="about__other-label">Connect</div>
+      <div class="about__connect">
+        <a href="https://www.linkedin.com/in/michelle-novenda-hartono/" target="_blank" rel="noopener noreferrer" class="about__link">→ LinkedIn</a>
+        <a href="https://medium.com/@michellenovenda" target="_blank" rel="noopener noreferrer" class="about__link">→ Medium</a>
+        <a href="mailto:mnhartono@gmail.com" class="about__link">→ mnhartono@gmail.com</a>
       </div>
     </div>
   </section>
@@ -1133,15 +1111,15 @@
         line(`<span class="t-out">visitor from <span class="t-gold">${visitorCity}</span> — welcome.</span>`);
       },
       ls() {
-        line(`<span class="t-gold">blog/</span>  <span class="t-gold">notes/</span>  <span class="t-gold">research/</span>  <span class="t-dim">.plan</span>  <span style="color: #C4875A">stitch/</span>`);
+        line(`<span class="t-gold">blog/</span>  <span class="t-gold">notes/</span>  <span class="t-gold">research/</span>  <span class="t-dim">.plan</span>`);
       },
       'cat .plan'() {
         line(`<span class="t-out">researching, breaking, documenting</span>`);
         line(`<span class="t-out">drawing diagrams nobody asked for</span>`);
-        line(`<span class="t-out">building something with thread and patience</span>`);
       },
       ping() {
-        line(`<span class="t-out">→ <a class="t-link" href="https://www.linkedin.com/in/michelle-novenda-hartono/" target="_blank">linkedin.com/in/michellenhartono</a></span>`);
+        line(`<span class="t-out">→ <a class="t-link" href="https://www.linkedin.com/in/michelle-novenda-hartono/" target="_blank">linkedin.com/in/michelle-novenda-hartono</a></span>`);
+        line(`<span class="t-out">→ <a class="t-link" href="https://medium.com/@michellenovenda" target="_blank">medium.com/@michellenovenda</a></span>`);
         line(`<span class="t-out">→ <a class="t-link" href="mailto:mnhartono@gmail.com">mnhartono@gmail.com</a></span>`);
         line(`<span class="t-dim">feel free to reach out.</span>`);
       },
@@ -1174,10 +1152,6 @@
         line(`<span class="t-dim">→ scrolling up...</span>`);
         document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' });
       },
-      'cd stitch'() {
-        line(`<span style="color:#C4875A">→ opening needleandstrings.com...</span>`);
-        setTimeout(() => window.open('https://needleandstrings.com', '_blank'), 600);
-      },
       exit() {
         line(`<span class="t-dim">logout</span>`);
         line(`<span class="t-dim">[Process completed]</span>`);
@@ -1205,7 +1179,7 @@
 
       // Only allow known commands — no dynamic property access
       const knownCommands = ['help','whoami','ls','cat .plan','ping','history','clear','sudo',
-        'sudo rm -rf /','cd blog','cd notes','cd research','cd stitch','exit'];
+        'sudo rm -rf /','cd blog','cd notes','cd research','exit'];
 
       if (knownCommands.includes(cmd) && commands.hasOwnProperty(cmd)) {
         commands[cmd]();
