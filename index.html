@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nvnda.dev — Michelle Hartono</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-top: #221C16;
+    --bg-bottom: #2E2620;
+    --bg-raised: #332A22;
+    --bg-code: #1A1C21;
+    --text: #F2EBE0;
+    --text-muted: rgba(242,235,224,0.32);
+    --text-dim: rgba(242,235,224,0.65);
+    --gold: #D4A55C;
+    --gold-light: #E4BC72;
+    --gold-glow: rgba(212,165,92,0.06);
+    --gold-dim: rgba(212,165,92,0.1);
+    --slate: #A3BFDA;
+    --slate-dim: rgba(142,170,194,0.08);
+    --border: rgba(237,229,216,0.06);
+    --border-hover: rgba(212,165,92,0.2);
+    --green: #7A9E7E;
+    --red: #C47070;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-head: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-top);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    /* A. Pre-dawn gradient — stronger shift */
+    background: linear-gradient(180deg, #1A1510 0%, #2A2218 35%, #33291E 70%, #382E22 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ========== HEADER ========== */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(34,28,22,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header__logo {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .header__logo-dot {
+    color: var(--gold);
+  }
+  /* C. Terminal cursor — more visible, persistent slow blink */
+  .header__cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--gold);
+    margin-left: 3px;
+    border-radius: 1px;
+    animation: cursorBlink 1.2s ease-in-out infinite;
+    vertical-align: middle;
+    opacity: 0.9;
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 0.15; }
+  }
+  .header__nav {
+    display: flex;
+    gap: 1.8rem;
+  }
+  .header__nav a {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .header__nav a:hover, .header__nav a.active { color: var(--gold); }
+
+  /* ========== HERO ========== */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+  }
+  .hero__label {
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  /* D. Bold typography — Space Grotesk, large, sharp */
+  .hero__title {
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: 4rem;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 680px;
+  }
+  .hero__title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .hero__subtitle {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.85;
+    margin-bottom: 2.5rem;
+  }
+  .hero__creds {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .cred {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.65rem;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .cred--gold {
+    background: var(--gold-dim);
+    border-color: rgba(212,165,92,0.15);
+    color: var(--gold);
+  }
+  /* A. City light bokeh — scattered warm orbs */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -5%;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle at 8% 30%, rgba(212,165,92,0.07) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(196,135,90,0.05) 0%, transparent 35%),
+      radial-gradient(circle at 65% 70%, rgba(212,165,92,0.04) 0%, transparent 30%),
+      radial-gradient(circle at 20% 80%, rgba(180,140,80,0.03) 0%, transparent 25%),
+      radial-gradient(circle at 92% 55%, rgba(142,170,194,0.03) 0%, transparent 30%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  /* City lights along the bottom of the page */
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background:
+      radial-gradient(ellipse at 15% 100%, rgba(212,165,92,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(196,135,90,0.04) 0%, transparent 45%),
+      radial-gradient(ellipse at 80% 100%, rgba(212,165,92,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 35% 95%, rgba(142,170,194,0.02) 0%, transparent 35%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ========== PROOF STRIP ========== */
+  .proof {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .proof__item {
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+  .proof__sep {
+    color: rgba(212,165,92,0.3);
+    font-size: 0.5rem;
+  }
+
+  /* ========== SECTION ========== */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+  .section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section__title {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+  }
+  .section__more {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .section__more:hover { color: var(--gold); }
+
+  /* ========== FEATURED ========== */
+  .featured {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+  .featured__card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .featured__card:hover {
+    border-color: var(--border-hover);
+  }
+  .featured__top {
+    padding: 2rem 2rem 0;
+  }
+  .featured__label {
+    font-family: var(--font-mono);
+    font-size: 0.46rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .featured__title {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .featured__meta {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+  }
+  .featured__quote {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--gold);
+    border-left: 2px solid var(--gold);
+    padding-left: 1rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+  }
+  .featured__body {
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+  }
+  /* E. Code block glow */
+  .featured__code-wrap {
+    position: relative;
+  }
+  .featured__code-wrap {
+    position: relative;
+  }
+  .featured__code-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(180deg, rgba(212,165,92,0.05) 0%, transparent 30%, transparent 70%, rgba(212,165,92,0.03) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .featured__code {
+    margin: 0;
+    padding: 1.4rem 2rem;
+    background: var(--bg-code);
+    border-top: 1px solid rgba(163,191,218,0.06);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    line-height: 1.85;
+    color: var(--slate);
+    overflow-x: auto;
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(212,165,92,0.06), inset 0 -1px 0 rgba(212,165,92,0.04);
+  }
+  .code-comment { color: rgba(163,191,218,0.45); }
+  .code-keyword { color: var(--gold-light); }
+  .code-string { color: var(--green); }
+  .code-danger { color: var(--red); }
+  .featured__bottom {
+    padding: 1rem 2rem 1.5rem;
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.44rem;
+    letter-spacing: 0.04em;
+    padding: 0.18rem 0.5rem;
+    border-radius: 3px;
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+  .tag--slate {
+    background: var(--slate-dim);
+    color: var(--slate);
+  }
+
+  /* ========== POST CARDS ========== */
+  .posts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .post {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 1.2rem;
+    align-items: start;
+    padding: 1.1rem 1.3rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.25s, transform 0.15s, box-shadow 0.25s;
+  }
+  .post:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(212,165,92,0.04);
+  }
+  .post__date {
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    color: var(--text-muted);
+    padding-top: 0.15rem;
+  }
+  .post__title {
+    font-family: var(--font-head);
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+  }
+  .post__excerpt {
+    font-size: 0.66rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+  }
+  .post__tags { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .post__type {
+    font-family: var(--font-mono);
+    font-size: 0.46rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding-top: 0.15rem;
+  }
+
+  /* ========== NOTES GRID ========== */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+  .note-card {
+    padding: 1.2rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .note-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 20px rgba(212,165,92,0.04);
+  }
+  /* Subtle top accent line on note cards */
+  .note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .note-card:hover::before { opacity: 1; }
+  .note-card__icon {
+    font-family: var(--font-mono);
+    font-size: 0.48rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.6rem;
+  }
+  .note-card__title {
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+  .note-card__desc {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ========== ABOUT ========== */
+  .about {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .about__label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .about__text {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+  .about__connect {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .about__link {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s;
+  }
+  .about__link:hover { gap: 0.8rem; }
+  .about__other-label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+  .about__stitch-card {
+    padding: 1.3rem;
+    background: linear-gradient(135deg, #30271E 0%, #28211A 100%);
+    border: 1px solid rgba(196,135,90,0.1);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Warm glow on stitch card */
+  .about__stitch-card::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(196,135,90,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .about__stitch-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: #C4875A;
+    margin-bottom: 0.35rem;
+  }
+  .about__stitch-desc {
+    font-size: 0.65rem;
+    color: rgba(237,229,216,0.45);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+  .about__stitch-link {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: #C4875A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .about__stitch-link:hover { gap: 0.7rem; }
+
+
+  /* ========== INTERACTIVE TERMINAL FOOTER ========== */
+  .terminal-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .terminal__output {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 2;
+    color: var(--text-dim);
+    min-height: 60px;
+  }
+  .terminal__output div {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .terminal__input-line {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    margin-top: 0.2rem;
+  }
+  .terminal__input-prompt {
+    color: var(--text);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .terminal__input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text);
+    caret-color: var(--gold);
+    flex: 1;
+    padding: 0;
+    margin-left: 0.4rem;
+    line-height: 2;
+  }
+  .terminal__input::placeholder {
+    color: rgba(242,235,224,0.12);
+    font-style: normal;
+  }
+
+  .t-user { color: var(--gold); }
+  .t-path { color: var(--slate); }
+  .t-sym { color: var(--text-muted); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--text-dim); }
+  .t-dim { color: rgba(242,235,224,0.25); }
+  .t-gold { color: var(--gold); }
+  .t-green { color: var(--green); }
+  .t-red { color: var(--red); }
+  .t-link {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,165,92,0.3);
+  }
+  .t-link:hover { border-bottom-color: var(--gold); }
+
+  .terminal-footer__copy {
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    color: var(--text-muted);
+    margin-top: 2.5rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ========== FAKE ALERT MODAL ========== */
+  .fake-alert-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(14,15,18,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: alertFadeIn 0.2s ease;
+  }
+  .fake-alert {
+    background: #1E1D1B;
+    border: 1px solid rgba(212,165,92,0.2);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(212,165,92,0.04);
+    animation: alertBounce 0.3s ease;
+  }
+  .fake-alert__icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  .fake-alert__title {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .fake-alert__msg {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+  .fake-alert__btn {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    padding: 0.5rem 1.5rem;
+    background: var(--gold);
+    color: #1A1510;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: background 0.15s;
+  }
+  .fake-alert__btn:hover {
+    background: var(--gold-light);
+  }
+  @keyframes alertFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes alertBounce {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero { animation: fadeIn 0.8s ease 0.15s both; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .hero__title { font-size: 2.6rem; }
+    .hero::before { display: none; }
+    .post { grid-template-columns: 1fr; gap: 0.4rem; }
+    .post__date, .post__type { display: none; }
+    .notes-grid { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; gap: 2rem; }
+    .featured__code { padding: 1rem 1.2rem; font-size: 0.56rem; }
+    .featured__title { font-size: 1.15rem; }
+    .featured__quote { font-size: 0.9rem; }
+    .proof { gap: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="header__logo">
+        nvnda<span class="header__logo-dot">.</span>dev<span class="header__cursor"></span>
+      </a>
+      <nav class="header__nav">
+        <a href="#" class="active">Blog</a>
+        <a href="#">Notes</a>
+        <a href="#">Research</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__label">// security research & notes</div>
+    <h1 class="hero__title">Breaking things<br><em>carefully</em>,<br>then writing<br>about it.</h1>
+    <p class="hero__subtitle">
+      I'm Michelle — security engineer sharing pentesting research, study notes, and lessons from the field. Complex topics, approachable language.
+    </p>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <div class="proof reveal">
+    <span class="proof__item">CRTP</span>
+    <span class="proof__sep">·</span>
+    <span class="proof__item">CEH</span>
+    <span class="proof__sep">·</span>
+    <span class="proof__item">Published in Block Magnates</span>
+    <span class="proof__sep">·</span>
+    <span class="proof__item">Guest on Natalie Feng Lin</span>
+    <span class="proof__sep">·</span>
+    <span class="proof__item">Public notes on HackMD</span>
+  </div>
+
+  <!-- FEATURED -->
+  <section class="featured reveal">
+    <div class="featured__card">
+      <div class="featured__top">
+        <div class="featured__label">Featured</div>
+        <h2 class="featured__title">Breaking into Web3:<br>Hacking On-Chain Smart Contracts</h2>
+        <div class="featured__meta">March 2026 · Block Magnates · 8 min read</div>
+        <blockquote class="featured__quote">A single missed check can drain millions.</blockquote>
+        <p class="featured__body">
+          Smart contract auditing requires understanding both the EVM execution model and common vulnerability patterns. Here's a classic reentrancy vulnerability, dissected step by step.
+        </p>
+      </div>
+      <div class="featured__code-wrap">
+        <pre class="featured__code"><span class="code-keyword">function</span> withdraw() <span class="code-keyword">external</span> {
+    <span class="code-keyword">require</span>(balances[msg.sender] > <span class="code-string">0</span>);
+
+    (bool success, ) = msg.sender.call{
+        value: balances[msg.sender]
+    }(<span class="code-string">""</span>);
+
+    balances[msg.sender] = <span class="code-string">0</span>;  <span class="code-danger">// state updated after external call</span>
+}
+
+<span class="code-comment">// Fix: checks-effects-interactions pattern</span>
+<span class="code-keyword">function</span> withdrawSafe() <span class="code-keyword">external</span> {
+    <span class="code-keyword">uint256</span> amount = balances[msg.sender];
+    balances[msg.sender] = <span class="code-string">0</span>;  <span class="code-keyword">// state first</span>
+    (bool success, ) = msg.sender.call{value: amount}(<span class="code-string">""</span>);
+}</pre>
+      </div>
+      <div class="featured__bottom">
+        <span class="tag">smart contracts</span>
+        <span class="tag">web3</span>
+        <span class="tag">reentrancy</span>
+        <span class="tag tag--slate">solidity</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT -->
+  <section class="section reveal">
+    <div class="section__header">
+      <span class="section__title">Recent</span>
+      <a href="#" class="section__more">View all →</a>
+    </div>
+    <div class="posts">
+      <a href="#" class="post">
+        <span class="post__date">Mar 26</span>
+        <div>
+          <div class="post__title">CRTP Exam: What I Learned Attacking Active Directory</div>
+          <div class="post__excerpt">An honest walkthrough of the Certified Red Team Professional exam — what worked, what didn't, and the methodology that got me through.</div>
+          <div class="post__tags">
+            <span class="tag">active directory</span>
+            <span class="tag">CRTP</span>
+            <span class="tag tag--slate">cert</span>
+          </div>
+        </div>
+        <span class="post__type">Article</span>
+      </a>
+      <a href="#" class="post">
+        <span class="post__date">Feb 26</span>
+        <div>
+          <div class="post__title">Cybersecurity, Scammers, and Confidence</div>
+          <div class="post__excerpt">Guest on Natalie Feng Lin's podcast — how scammers collect your data, social engineering in Asia, and building confidence as a woman in security.</div>
+          <div class="post__tags">
+            <span class="tag">social engineering</span>
+            <span class="tag tag--slate">podcast</span>
+          </div>
+        </div>
+        <span class="post__type">Podcast</span>
+      </a>
+      <a href="#" class="post">
+        <span class="post__date">Jan 26</span>
+        <div>
+          <div class="post__title">SSRF: When Your Server Makes Requests for the Attacker</div>
+          <div class="post__excerpt">Server-Side Request Forgery from first principles. What it is, why it matters, and how to test for it during a pentest.</div>
+          <div class="post__tags">
+            <span class="tag">SSRF</span>
+            <span class="tag">web security</span>
+          </div>
+        </div>
+        <span class="post__type">Article</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- STUDY NOTES -->
+  <section class="section reveal">
+    <div class="section__header">
+      <span class="section__title">Study Notes & References</span>
+      <a href="#" class="section__more">View all →</a>
+    </div>
+    <div class="notes-grid">
+      <a href="#" class="note-card">
+        <div class="note-card__icon">Reference</div>
+        <div class="note-card__title">CRTP Study Notes</div>
+        <div class="note-card__desc">Active Directory pentesting methodology, tools, and attack paths.</div>
+      </a>
+      <a href="#" class="note-card">
+        <div class="note-card__icon">Cheatsheet</div>
+        <div class="note-card__title">Web App Pentest Checklist</div>
+        <div class="note-card__desc">OWASP-based checklist for web application security assessments.</div>
+      </a>
+      <a href="#" class="note-card">
+        <div class="note-card__icon">Notes</div>
+        <div class="note-card__title">CEH Exam Prep</div>
+        <div class="note-card__desc">Key concepts and practice notes from the Certified Ethical Hacker journey.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about reveal">
+    <div>
+      <div class="about__label">About</div>
+      <p class="about__text">
+        Security engineer based in Taipei. I spend my days finding what's broken in systems and helping organizations understand what's actually at risk.
+      </p>
+      <p class="about__text">
+        I believe the best security writing makes complex topics feel approachable without dumbing them down. If something cost me hours to figure out, I write it down so it costs you minutes.
+      </p>
+      <p class="about__text" style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); line-height: 1.9;">
+        Currently: researching, breaking, documenting.<br>
+        Drawing diagrams nobody asked for.<br>
+        Building something with thread and patience.
+      </p>
+      <div class="about__connect">
+        <a href="#" class="about__link">→ LinkedIn</a>
+        <a href="#" class="about__link">→ Medium</a>
+        <a href="#" class="about__link">→ Email</a>
+      </div>
+    </div>
+    <div>
+      <div class="about__other-label">Also me, elsewhere</div>
+      <div class="about__stitch-card">
+        <div class="about__stitch-title">needle & strings</div>
+        <div class="about__stitch-desc">
+          I also make cross-stitch art. Travel photos turned into patterns, paired with poems. A different kind of patience, a different kind of precision.
+        </div>
+        <a href="https://needleandstrings.com" class="about__stitch-link">→ needleandstrings.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE TERMINAL FOOTER -->
+  <footer class="terminal-footer" id="terminalFooter">
+    <div class="terminal__output" id="termOutput"></div>
+    <div class="terminal__input-line">
+      <span class="terminal__input-prompt"><span class="t-user">michelle</span>@<span class="t-path">nvnda</span> <span class="t-sym">~ %</span></span>
+      <input class="terminal__input" id="termInput" type="text" placeholder="try something..." autocomplete="off" spellcheck="false">
+    </div>
+    <div class="terminal-footer__copy">© 2026 Michelle Hartono · nvnda.dev</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ====== INTERACTIVE TERMINAL ======
+    const output = document.getElementById('termOutput');
+    const input = document.getElementById('termInput');
+    const prompt = '<span class="t-user">michelle</span>@<span class="t-path">nvnda</span> <span class="t-sym">~ %</span>';
+    let visitorCity = 'somewhere';
+    let visitorBrowser = 'unknown';
+    let visitorTime = '';
+    let booted = false;
+
+    // Sanitize ALL user/external input before DOM insertion
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function line(html) {
+      // Cap output — keep it tight
+      while (output.children.length > 18) output.removeChild(output.firstChild);
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      output.appendChild(d);
+      d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function delayLine(html, ms) {
+      return new Promise(resolve => {
+        setTimeout(() => { line(html); resolve(); }, ms);
+      });
+    }
+
+    // Show a fake browser alert — the XSS "worked" (it didn't)
+    function showFakeAlert(title, msg, btnText) {
+      const overlay = document.createElement('div');
+      overlay.className = 'fake-alert-overlay';
+      overlay.innerHTML = `
+        <div class="fake-alert">
+          <div class="fake-alert__icon">⚠️</div>
+          <div class="fake-alert__title">${title}</div>
+          <div class="fake-alert__msg">${msg}</div>
+          <button class="fake-alert__btn">${btnText || 'OK'}</button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      const btn = overlay.querySelector('.fake-alert__btn');
+      btn.addEventListener('click', () => overlay.remove());
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+    }
+
+    // Safely evaluate simple math expressions (for SSTI responses)
+    function safeMath(expr) {
+      const cleaned = expr.replace(/[^0-9+\-*/().%\s]/g, '');
+      if (!cleaned || cleaned.length > 30) return null;
+      try {
+        const result = Function('"use strict"; return (' + cleaned + ')')();
+        return typeof result === 'number' && isFinite(result) ? result : null;
+      } catch { return null; }
+    }
+
+    // Extract the "payload" from XSS attempts for the fake alert
+    function extractXSSPayload(input) {
+      // Try to find alert(), prompt(), confirm() content
+      const alertMatch = input.match(/alert\s*\(\s*['"]?([^'")\s]*)['"]?\s*\)/i);
+      if (alertMatch) return { fn: 'alert', val: alertMatch[1] || '1' };
+      const promptMatch = input.match(/prompt\s*\(\s*['"]?([^'")]*)['"]?\s*\)/i);
+      if (promptMatch) return { fn: 'prompt', val: promptMatch[1] || '' };
+      const confirmMatch = input.match(/confirm\s*\(\s*['"]?([^'")]*)['"]?\s*\)/i);
+      if (confirmMatch) return { fn: 'confirm', val: confirmMatch[1] || '' };
+      return { fn: 'alert', val: '1' };
+    }
+
+    // Extract SQL operation for adaptive response
+    function extractSQLIntent(input) {
+      if (/drop\s+table/i.test(input)) return 'no tables to drop.';
+      if (/union\s+select/i.test(input)) return "union select on a div. bold.";
+      if (/or\s+1\s*=\s*1/i.test(input)) return "1=1. true. and?";
+      if (/select\s+\*/i.test(input)) return "select * from nowhere.";
+      if (/insert\s+into/i.test(input)) return "insert into what exactly?";
+      if (/delete\s+from/i.test(input)) return "the dom? try devtools for that.";
+      if (/update\s/i.test(input)) return "nothing to update.";
+      return "no database here.";
+    }
+
+    // Detect injection attempts — adaptive, playful responses
+    function detectAttack(input) {
+      // XSS — give them their "alert" with their actual payload
+      if (/<script|<img|<svg|<iframe|onerror|onload|javascript:|alert\s*\(|prompt\s*\(|confirm\s*\(/i.test(input)) {
+        const payload = extractXSSPayload(input);
+        const displayVal = esc(payload.val || '1');
+        const fnName = esc(payload.fn);
+
+        showFakeAlert(
+          fnName + '(' + displayVal + ')',
+          `your ${fnName} was heard.<br>just not by the browser.`,
+          payload.fn === 'confirm' ? 'confirmed' : payload.fn === 'prompt' ? 'noted' : 'i respect that'
+        );
+        return `<span class="t-red">xss.</span> <span class="t-dim">check above. ↑</span>`;
+      }
+
+      // SQL injection
+      if (/('|"|;)\s*(or|and|union|select|drop|insert|delete|update|--|#)/i.test(input)) {
+        return `<span class="t-red">sqli.</span> <span class="t-dim">${extractSQLIntent(input)}</span>`;
+      }
+
+      // Command injection
+      if (/[;|`]/.test(input) && input.length > 3 && !/^[a-z\s.]+$/.test(input)) {
+        return `<span class="t-red">nope.</span> <span class="t-dim">not a real shell.</span>`;
+      }
+
+      // Path traversal
+      if (/\.\.\/|\.\.\\/.test(input)) {
+        const target = input.replace(/.*\.\.\//g, '').replace(/.*\.\.\\/g, '') || '?';
+        return `<span class="t-red">traversal.</span> <span class="t-dim">looking for ${esc(target)}? not here.</span>`;
+      }
+
+      // SSTI / template injection — evaluate the actual math
+      if (/\{\{|\$\{|<%/.test(input)) {
+        const exprMatch = input.match(/\{\{(.+?)\}\}/) || input.match(/\$\{(.+?)\}/) || input.match(/<%=?\s*(.+?)%>/);
+        const expr = exprMatch ? exprMatch[1].trim() : '';
+        const mathResult = safeMath(expr);
+
+        if (mathResult !== null) {
+          showFakeAlert(
+            String(mathResult),
+            `${esc(expr)} = ${mathResult}<br><span style="color:var(--gold);font-size:0.55rem;">i did the math for you.</span>`,
+            'fair enough'
+          );
+          return `<span class="t-red">ssti.</span> <span class="t-dim">${esc(expr)} = ${mathResult} ↑</span>`;
+        } else {
+          showFakeAlert(
+            'undefined',
+            `${esc(expr)}<br><span style="color:var(--gold);font-size:0.55rem;">couldn't compute that one.</span>`,
+            'ok'
+          );
+          return `<span class="t-red">ssti.</span> <span class="t-dim">undefined.</span>`;
+        }
+      }
+
+      return null;
+    }
+
+    // Detect visitor info (sanitize external API response)
+    async function detectVisitor() {
+      try {
+        const r = await fetch('https://ipapi.co/json/');
+        const d = await r.json();
+        const city = typeof d.city === 'string' ? d.city : '';
+        const country = typeof d.country_name === 'string' ? d.country_name : '';
+        visitorCity = city ? esc(`${city}, ${country}`) : esc(country) || 'somewhere';
+      } catch { visitorCity = 'somewhere out there'; }
+
+      const ua = navigator.userAgent;
+      // Only output hardcoded strings — never reflect raw UA
+      if (ua.includes('Chrome') && !ua.includes('Edg')) visitorBrowser = 'Chrome on ' + (ua.includes('Mac') ? 'macOS' : ua.includes('Win') ? 'Windows' : ua.includes('Linux') ? 'Linux' : 'unknown');
+      else if (ua.includes('Edg')) visitorBrowser = 'Edge on ' + (ua.includes('Mac') ? 'macOS' : 'Windows');
+      else if (ua.includes('Firefox')) visitorBrowser = 'Firefox on ' + (ua.includes('Mac') ? 'macOS' : ua.includes('Win') ? 'Windows' : 'Linux');
+      else if (ua.includes('Safari')) visitorBrowser = 'Safari on macOS';
+      else visitorBrowser = 'something mysterious';
+
+      const h = new Date().getHours();
+      visitorTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (h >= 0 && h < 6) visitorTime += ' — burning the midnight oil';
+      else if (h >= 6 && h < 9) visitorTime += ' — early bird';
+      else if (h >= 22) visitorTime += ' — night owl';
+    }
+
+    // Boot sequence
+    async function boot() {
+      if (booted) return;
+      booted = true;
+      await detectVisitor();
+
+      const now = new Date();
+      const loginDate = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      const loginTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      await delayLine(`<span class="t-dim">Last login: ${loginDate} ${loginTime} on ttys003</span>`, 200);
+      await delayLine(`${prompt} <span class="t-cmd">whois visitor</span>`, 500);
+      await delayLine(`<span class="t-out">→ connecting from <span class="t-gold">${visitorCity}</span></span>`, 300);
+      await delayLine(`<span class="t-out">→ ${visitorBrowser}</span>`, 200);
+      await delayLine(`<span class="t-out">→ local time: ${visitorTime}</span>`, 200);
+      await delayLine('', 100);
+
+      input.focus();
+    }
+
+    // Run boot when terminal scrolls into view
+    const termObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) boot(); });
+    }, { threshold: 0.3 });
+    termObs.observe(document.getElementById('terminalFooter'));
+
+    // Command handler
+    const commands = {
+      help() {
+        line(`<span class="t-out">available commands:</span>`);
+        line(`<span class="t-gold">  whoami</span>    <span class="t-dim">— who are you?</span>`);
+        line(`<span class="t-gold">  ls</span>        <span class="t-dim">— look around</span>`);
+        line(`<span class="t-gold">  cat .plan</span> <span class="t-dim">— what's next</span>`);
+        line(`<span class="t-gold">  ping</span>      <span class="t-dim">— reach out</span>`);
+        line(`<span class="t-gold">  history</span>   <span class="t-dim">— recent sessions</span>`);
+        line(`<span class="t-gold">  clear</span>     <span class="t-dim">— start fresh</span>`);
+      },
+      whoami() {
+        line(`<span class="t-out">visitor from <span class="t-gold">${visitorCity}</span> — welcome.</span>`);
+      },
+      ls() {
+        line(`<span class="t-gold">blog/</span>  <span class="t-gold">notes/</span>  <span class="t-gold">research/</span>  <span class="t-dim">.plan</span>  <span style="color: #C4875A">stitch/</span>`);
+      },
+      'cat .plan'() {
+        line(`<span class="t-out">researching, breaking, documenting</span>`);
+        line(`<span class="t-out">drawing diagrams nobody asked for</span>`);
+        line(`<span class="t-out">building something with thread and patience</span>`);
+      },
+      ping() {
+        line(`<span class="t-out">→ <a class="t-link" href="https://www.linkedin.com/in/michelle-novenda-hartono/" target="_blank">linkedin.com/in/michellenhartono</a></span>`);
+        line(`<span class="t-out">→ <a class="t-link" href="mailto:mnhartono@gmail.com">mnhartono@gmail.com</a></span>`);
+        line(`<span class="t-dim">feel free to reach out.</span>`);
+      },
+      history() {
+        line(`<span class="t-dim">  142  nmap -sV --script=vuln 10.10.14.2</span>`);
+        line(`<span class="t-dim">  143  sqlmap -r req.txt --dbs --batch</span>`);
+        line(`<span class="t-dim">  144  gobuster dir -u https://target.com -w common.txt</span>`);
+        line(`<span class="t-dim">  145  python3 exploit.py --rhost 10.10.14.2</span>`);
+        line(`<span class="t-dim">  146  cat .plan</span>`);
+        line(`<span class="t-dim">  147  whois visitor</span>`);
+      },
+      clear() {
+        output.innerHTML = '';
+      },
+      sudo() {
+        line(`<span class="t-red">nice try.</span>`);
+      },
+      'sudo rm -rf /'() {
+        line(`<span class="t-red">absolutely not.</span>`);
+      },
+      'cd blog'() {
+        line(`<span class="t-dim">→ scrolling up...</span>`);
+        document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' });
+      },
+      'cd notes'() {
+        line(`<span class="t-dim">→ scrolling up...</span>`);
+        document.querySelectorAll('.section')[1]?.scrollIntoView({ behavior: 'smooth' });
+      },
+      'cd research'() {
+        line(`<span class="t-dim">→ scrolling up...</span>`);
+        document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' });
+      },
+      'cd stitch'() {
+        line(`<span style="color:#C4875A">→ opening needleandstrings.com...</span>`);
+        setTimeout(() => window.open('https://needleandstrings.com', '_blank'), 600);
+      },
+      exit() {
+        line(`<span class="t-dim">logout</span>`);
+        line(`<span class="t-dim">[Process completed]</span>`);
+        input.disabled = true;
+        input.placeholder = '';
+      },
+    };
+
+    // Max input length to prevent abuse
+    input.setAttribute('maxlength', '80');
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const raw = input.value.trim();
+      if (!raw) return;
+      const cmd = raw.toLowerCase();
+      const safe = esc(raw); // ALWAYS escape before reflecting
+
+      line(`${prompt} <span class="t-cmd">${safe}</span>`);
+      input.value = '';
+
+      // Check for injection attempts first — playful responses
+      const attack = detectAttack(raw);
+      if (attack) { line(attack); return; }
+
+      // Only allow known commands — no dynamic property access
+      const knownCommands = ['help','whoami','ls','cat .plan','ping','history','clear','sudo',
+        'sudo rm -rf /','cd blog','cd notes','cd research','cd stitch','exit'];
+
+      if (knownCommands.includes(cmd) && commands.hasOwnProperty(cmd)) {
+        commands[cmd]();
+      } else if (cmd.startsWith('cd ')) {
+        if (knownCommands.includes(cmd) && commands.hasOwnProperty(cmd)) {
+          commands[cmd]();
+        } else {
+          line(`<span class="t-red">cd: no such directory: ${esc(cmd.slice(3))}</span>`);
+        }
+      } else if (cmd.startsWith('sudo')) {
+        commands.sudo();
+      } else {
+        line(`<span class="t-red">command not found: ${safe}</span> <span class="t-dim">— type <span class="t-gold">help</span> if you're lost</span>`);
+      }
+    });
+
+    // Click anywhere on terminal area to focus input
+    document.getElementById('terminalFooter').addEventListener('click', () => input.focus());
+  </script>
+
+</body>
+</html>
