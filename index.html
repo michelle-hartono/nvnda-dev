@@ -1111,7 +1111,7 @@
         line(`<span class="t-out">visitor from <span class="t-gold">${visitorCity}</span> — welcome.</span>`);
       },
       ls() {
-        line(`<span class="t-gold">blog/</span>  <span class="t-gold">notes/</span>  <span class="t-gold">research/</span>  <span class="t-dim">.plan</span>`);
+        line(`<span class="t-gold">blog/</span>  <span class="t-gold">notes/</span>  <span class="t-gold">research/</span>  <span class="t-dim">.plan</span>  <span style="color:rgba(196,135,90,0.35)">stitch/</span>`);
       },
       'cat .plan'() {
         line(`<span class="t-out">researching, breaking, documenting</span>`);
@@ -1152,6 +1152,10 @@
         line(`<span class="t-dim">→ scrolling up...</span>`);
         document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' });
       },
+      'cd stitch'() {
+        line(`<span style="color:rgba(196,135,90,0.5)">→ opening needleandstrings.com...</span>`);
+        setTimeout(() => window.open('https://needleandstrings.com', '_blank'), 600);
+      },
       exit() {
         line(`<span class="t-dim">logout</span>`);
         line(`<span class="t-dim">[Process completed]</span>`);
@@ -1179,7 +1183,7 @@
 
       // Only allow known commands — no dynamic property access
       const knownCommands = ['help','whoami','ls','cat .plan','ping','history','clear','sudo',
-        'sudo rm -rf /','cd blog','cd notes','cd research','exit'];
+        'sudo rm -rf /','cd blog','cd notes','cd research','cd stitch','exit'];
 
       if (knownCommands.includes(cmd) && commands.hasOwnProperty(cmd)) {
         commands[cmd]();
